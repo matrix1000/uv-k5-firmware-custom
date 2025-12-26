@@ -46,8 +46,6 @@
     #define ARRAY_SIZE(x) (sizeof(x) / sizeof(x[0]))
 #endif
 
-uint8_t gUnlockAllTxConfCnt;
-
 #ifdef ENABLE_F_CAL_MENU
     void writeXtalFreqCal(const int32_t value, const bool update_eeprom)
     {
@@ -182,11 +180,6 @@ int MENU_GetLimits(uint8_t menu_id, int32_t *pMin, int32_t *pMax)
         case MENU_ROGER:
             //*pMin = 0;
             *pMax = ARRAY_SIZE(gSubMenu_ROGER) - 1;
-            break;
-
-        case MENU_PONMSG:
-            //*pMin = 0;
-            *pMax = ARRAY_SIZE(gSubMenu_PONMSG) - 1;
             break;
 
         case MENU_R_DCS:
@@ -782,10 +775,6 @@ void MENU_AcceptSetting(void)
             }
             return;
 #endif
-        case MENU_PONMSG:
-            gEeprom.POWER_ON_DISPLAY_MODE = gSubMenuSelection;
-            break;
-
         case MENU_ROGER:
             gEeprom.ROGER = gSubMenuSelection;
             break;
@@ -829,20 +818,7 @@ void MENU_AcceptSetting(void)
 #endif
 
         case MENU_F_LOCK: {
-            if(gSubMenuSelection == F_LOCK_NONE) { // select 10 times to enable
-                gUnlockAllTxConfCnt++;
-#ifdef ENABLE_FEAT_F4HWN
-                if(gUnlockAllTxConfCnt < 3)
-#else
-                if(gUnlockAllTxConfCnt < 10)
-#endif
-                    return;
-            }
-            else
-                gUnlockAllTxConfCnt = 0;
-
             gSetting_F_LOCK = gSubMenuSelection;
-
             #ifdef ENABLE_FEAT_F4HWN
             if(gSetting_F_LOCK == F_LOCK_ALL) {
                 SETTINGS_ResetTxLock();
@@ -1254,10 +1230,6 @@ void MENU_ShowCurrentSetting(void)
 #endif
         case MENU_D_LIVE_DEC:
             gSubMenuSelection = gSetting_live_DTMF_decoder;
-            break;
-
-        case MENU_PONMSG:
-            gSubMenuSelection = gEeprom.POWER_ON_DISPLAY_MODE;
             break;
 
         case MENU_ROGER:

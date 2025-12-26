@@ -76,7 +76,7 @@ bandscope() {
         rm -f ./compiled-firmware/* && cd /app && make -s \
         ENABLE_SPECTRUM=1 \
         ENABLE_FMRADIO=0 \
-        ENABLE_VOX=0 \
+        ENABLE_VOX=1 \
         ENABLE_AIRCOPY=1 \
         ENABLE_FEAT_F4HWN_SCREENSHOT=1 \
         ENABLE_FEAT_F4HWN_GAME=0 \

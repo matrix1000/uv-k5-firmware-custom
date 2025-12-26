@@ -91,7 +91,6 @@ const t_menu_item MenuList[] =
     {"Mic",         MENU_MIC           },
     {"MicBar",      MENU_MIC_BAR       },
     {"ChDisp",      MENU_MDF           }, // was "MDF"
-    {"POnMsg",      MENU_PONMSG        },
     {"BLTime",      MENU_ABR           }, // was "ABR"
     {"BLMin",       MENU_ABR_MIN       },
     {"BLMax",       MENU_ABR_MAX       },
@@ -274,19 +273,6 @@ const char* const gSubMenu_PTT_ID[] =
     "DOWN CODE",
     "UP+DOWN\nCODE",
     "APOLLO\nQUINDAR"
-};
-
-const char gSubMenu_PONMSG[][8] =
-{
-#ifdef ENABLE_FEAT_F4HWN
-    "ALL",
-    "SOUND",
-#else
-    "FULL",
-#endif
-    "MESSAGE",
-    "VOLTAGE",
-    "NONE"
 };
 
 const char gSubMenu_ROGER[][6] =
@@ -992,10 +978,6 @@ void UI_DisplayMenu(void)
             break;
 #endif
 
-        case MENU_PONMSG:
-            strcpy(String, gSubMenu_PONMSG[gSubMenuSelection]);
-            break;
-
         case MENU_ROGER:
             strcpy(String, gSubMenu_ROGER[gSubMenuSelection]);
             break;
@@ -1018,14 +1000,7 @@ void UI_DisplayMenu(void)
             break;
 
         case MENU_F_LOCK:
-#ifdef ENABLE_FEAT_F4HWN
-            if(!gIsInSubMenu && gUnlockAllTxConfCnt>0 && gUnlockAllTxConfCnt<3)
-#else
-            if(!gIsInSubMenu && gUnlockAllTxConfCnt>0 && gUnlockAllTxConfCnt<10)
-#endif
-                strcpy(String, "READ\nMANUAL");
-            else
-                strcpy(String, gSubMenu_F_LOCK[gSubMenuSelection]);
+            strcpy(String, gSubMenu_F_LOCK[gSubMenuSelection]);
             break;
 
         #ifdef ENABLE_F_CAL_MENU
